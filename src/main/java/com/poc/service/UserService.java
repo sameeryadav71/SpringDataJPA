@@ -8,4 +8,5 @@ public interface UserService {
 	 public List<User> getUsers();
 	 public User addUser(User user);
 	 public User deleteUserByName(String emailid);
+	 public User updateUser(User user);
 }
