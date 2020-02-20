@@ -10,4 +10,6 @@ import com.poc.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
 	Optional<User> findByName(String emailid);
+
+	Optional<User> findByEmail(String email);
 }

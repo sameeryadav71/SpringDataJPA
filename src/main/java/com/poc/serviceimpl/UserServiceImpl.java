@@ -15,36 +15,45 @@ import com.poc.service.UserService;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
+
 	@Override
 	public List<User> getUsers() {
 		return userRepository.findAll();
 	}
+
 	@Override
-	public User addUser(User user) {	
+	public User addUser(User user) {
 		List<User> findAll = userRepository.findAll();
 		List<User> collect = findAll.stream().filter(e -> e.getName().equals(user.getName())).collect(Collectors.toList());
-		if(collect.isEmpty())
-		{
+		if (collect.isEmpty()) {
 			return userRepository.save(user);
 		}
 		return null;
 	}
+
 	@Override
-	public User deleteUserByName(String name) {
-		Optional<User> findById = userRepository.findByName(name);
-		if(findById.isPresent())
-		{
+	public User deleteUserByEmail(String email) {
+		Optional<User> findById = userRepository.findByEmail(email);
+		if (findById.isPresent()) {
 			userRepository.deleteById(findById.get().getId());
 			return findById.get();
 		}
 		return null;
-		}
+	}
+
 	@Override
-	public User updateUser(User user) {
-		Optional<User> findById = userRepository.findById(user.getId());
+	public User updateUser(Long id,User user) {
+		user.setId(id);	
+		return userRepository.save(user);
+	}
+
+	@Override
+	public User getUserById(Long id) {
+		
+		Optional<User> findById = userRepository.findById(id);
 		if(findById.isPresent())
 		{
-			return userRepository.save(user);
+			return findById.get();
 		}
 		return null;
 	}
